@@ -19,6 +19,7 @@
   "variables": {
     "storageAccountName": "[toLower(concat(parameters('ResourceBaseName'), 'chatbotstorage'))]",
     "keyVaultName": "[toLower(concat(parameters('ResourceBaseName'), 'KeyVault'))]",
+    "vNetName": "[toLower(concat(parameters('ResourceBaseName'), 'VNet'))]",
     "cogSvcBaseNameName": "[toLower(concat(parameters('ResourceBaseName'), 'CogSvc'))]",
     "_artifactsLocation": "https://raw.githubusercontent.com"
   },
@@ -64,6 +65,20 @@
         },
         "parameters": {
           "cognitiveServiceBaseNameName": { "value": "[variables('keyVaultName')]" }
+        }
+      }
+    },
+    {
+      "apiVersion": "2017-05-10",
+      "name": "linkedVNetTemplate",
+      "type": "Microsoft.Resources/deployments",
+      "properties": {
+        "mode": "Incremental",
+        "templateLink": {
+          "uri": "[uri(variables('_artifactsLocation'), '/aviatoredb/ARMTests/master/AzureResourceGroup2/VNet.json')]"
+        },
+        "parameters": {
+          "vNetBaseName": { "value": "[variables('vNetName')]" }
         }
       }
     },
