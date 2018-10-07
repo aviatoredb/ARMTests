@@ -1,0 +1,182 @@
+﻿{
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "vNetBaseName": {
+      "type": "string",
+      "metadata": {
+        "description": "Azure Storage account name."
+      }
+    },
+    "vNetBaseNetwork": {
+      "type": "string",
+      "defaultValue": "172.31.30.0",
+      "metadata": {
+        "description": "Azure Storage account name."
+      }
+    },
+    "location": {
+      "type": "string",
+      "defaultValue": "[resourceGroup().location]",
+      "metadata": {
+        "description": "Location for all resources."
+      }
+    },
+    "publicIPSku": {
+      "type": "string",
+      "defaultValue": "Basic",
+      "allowedValues": [
+        "Basic",
+        "Standard"
+      ]
+    },
+    "publicIPAllocationMethod": {
+      "type": "string",
+      "defaultValue": "Dynamic",
+      "allowedValues": [
+        "Dynamic",
+        "Static"
+      ]
+    },
+    "publicIPIdleTimeoutInMinutes": {
+      "type": "int",
+      "defaultValue": 4
+    },
+    "publicIpAddressVersion": {
+      "type": "string",
+      "defaultValue": "IPv4"
+    },
+    "vNetGatewayGatewayType": {
+      "type": "string",
+      "defaultValue": "Vpn",
+      "allowedValues": [
+        "Vpn",
+        "ExpressRoute"
+      ]
+    },
+    "vNetGatewayVpnType": {
+      "type": "string",
+      "defaultValue": "RouteBased",
+      "allowedValues": [
+        "RouteBased",
+        "PolicyBased"
+      ]
+    },
+    "vNetEnableDdosProtection": {
+      "type": "bool",
+      "defaultValue": false
+    },
+    "vNetGatewaySku": {
+      "type": "string",
+      "defaultValue": "VpnGw1"
+    }
+
+  },
+  "variables": {
+    "publicIPName": "[concat(parameters('vNetBaseName'), 'VNetGatewayPiP')]",
+    "vNetGatewayName": "[concat(parameters('vNetBaseName'), 'VNetGateway')]",
+    "vNetName": "[concat(parameters('vNetBaseName'), 'VNet')]",
+    "vNetAddressPrefix": "[concat(parameters('vNetBaseNetwork'), '/25')]",
+    "vNetSubnetAddressPrefix": "[concat(parameters('vNetBaseNetwork'), '/26')]",
+    "vNetGatewaySubnetAddressPrefix": "[concat(substring(parameters('vNetBaseNetwork'), 0, lastIndexOf(parameters('vNetBaseNetwork'), '.')), '96/26')]" //172.31.30.96/27
+  },
+  "resources": [
+    {
+      "type": "Microsoft.Network/publicIPAddresses",
+      "apiVersion": "2018-08-01",
+      "name": "[variables('publicIPName')]",
+      "location": "[parameters('location')]",
+      "sku": {
+        "name": "[parameters('publicIPSku')]"
+      },
+      "properties": {
+        "publicIPAllocationMethod": "[parameters('publicIPAllocationMethod')]",
+        "idleTimeoutInMinutes": "[parameters('publicIPIdleTimeoutInMinutes')]",
+        "publicIpAddressVersion": "[parameters('publicIpAddressVersion')]"
+      }
+    },
+
+    {
+      "apiVersion": "2018-08-01",
+      "name": "[variables('vNetName')]",
+      "type": "Microsoft.Network/virtualNetworks",
+      "location": "[parameters('location')]",
+      "properties": {
+        "addressSpace": {
+          "addressPrefixes": [
+            "[variables('VNetAddressPrefix')]"
+          ]
+        },
+        "subnets": [
+          {
+            "name": "default",
+            "properties": {
+              "addressPrefix": "[variables('vNetSubnetAddressPrefix')]",
+              "serviceEndpoints": [
+                {
+                  "service": "Microsoft.Storage"
+                },
+                {
+                  "service": "Microsoft.KeyVault"
+                }
+              ]
+            }
+          },
+          {
+            "name": "GatewaySubnet",
+            "properties": {
+              "addressPrefix": "[variables('vNetGatewaySubnetAddressPrefix')]",
+              "serviceEndpoints": []
+            }
+          }
+        ],
+        "enableDdosProtection": "[parameters('vNetEnableDdosProtection')]"
+      }
+    },
+
+    {
+      "apiVersion": "2018-08-01",
+      "name": "[variables('vNetGatewayName')]",
+      "type": "Microsoft.Network/virtualNetworkGateways",
+      "location": "[parameters('location')]",
+      "dependsOn": [
+        "[concat('Microsoft.Network/publicIPAddresses/', variables('publicIPName'))]"
+      ],
+      "properties": {
+        "gatewayType": "[parameters('VNetGatewayGatewayType')]",
+        "ipConfigurations": [
+          {
+            "name": "default",
+            "properties": {
+              "privateIPAllocationMethod": "Dynamic",
+              "subnet": {
+                "id": "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('vNetName'), 'GatewaySubnet')]"
+              },
+              "publicIpAddress": {
+                "id": "[resourceId('Microsoft.Network/publicIPAddresses', variables('publicIPName'))]"
+              }
+            }
+          }
+        ],
+        "vpnType": "[parameters('VNetGatewayVpnType')]",
+        "sku": {
+          "name": "[parameters('vNetGatewaySku')]",
+          "tier": "[parameters('vNetGatewaySku')]"
+        },
+        "vpnClientConfiguration": {
+          "vpnClientAddressPool": {
+            "addressPrefixes": [
+              "[concat(substring(parameters('vNetBaseNetwork'), 0, lastIndexOf(parameters('vNetBaseNetwork'), '.')), '128/26')]" ////172.31.30.128/26
+            ]
+          },
+          "vpnClientProtocols": [
+            "SSTP"
+          ]
+        }
+      },
+
+      "outputs": {
+      }
+    }
+  ]
+}
