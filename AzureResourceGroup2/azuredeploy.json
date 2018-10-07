@@ -2,6 +2,9 @@
   "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
   "contentVersion": "1.0.0.0",
   "parameters": {
+    "activeDirectoryTenantId": {
+      "type": "string"
+    },
     "ResourceBaseName": {
       "type": "string"
     },
@@ -15,6 +18,7 @@
   },
   "variables": {
     "storageAccountName": "[toLower(concat(parameters('ResourceBaseName'), 'chatbotstorage'))]",
+    "keyVaultName": "[toLower(concat(parameters('ResourceBaseName'), 'KeyVault'))]",
     "_artifactsLocation": "https://raw.githubusercontent.com"
   },
   "resources": [
@@ -43,15 +47,24 @@
           "uri": "[uri(variables('_artifactsLocation'), '/aviatoredb/ARMTests/master/AzureResourceGroup2/KeyVault.json')]"
         },
         "parameters": {
-          //"storageAccountLocation": { "value": "[parameters('ResourceGroupLocation')]" }
+          "keyVaultName": { "value": "[variables('keyVaultName')]" },
+          "keyVaultADTenantId": { "value": "[parameters('activeDirectoryTenantId')]" }
         }
       }
     }
   ],
   "outputs": {
-    "artifactLocation": {
+    "storageAccountId": {
       "type": "string",
-      "value": "[variables('_artifactsLocation')]"
+      "value": "[reference('linkedStorageAccountTemplate').outputs.storageId.value]"
+    },
+    "storageAccountKey": {
+      "type": "string",
+      "value": "[reference('linkedStorageAccountTemplate').outputs.storageKey.value]"
+    },
+    "keyVaultId": {
+      "type": "string",
+      "value": "[reference('linkedAzureVaultTemplate').outputs.vaultId.value]"
     }
   }
 }

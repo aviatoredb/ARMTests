@@ -3,7 +3,10 @@
   "contentVersion": "1.0.0.0",
   "parameters": {
     "ResourceBaseName": {
-      "value": "edb"
+      "value": "edbARMTest"
+    },
+    "activeDirectoryTenantId": {
+      "value": "f9127298-458c-4ec3-a44f-6baf96f4ed36"
     }
   }
 }
