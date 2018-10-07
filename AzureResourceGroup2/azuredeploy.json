@@ -51,6 +51,18 @@
           "keyVaultADTenantId": { "value": "[parameters('activeDirectoryTenantId')]" }
         }
       }
+    },
+    {
+      "type": "Microsoft.KeyVault/vaults/secrets",
+      "name": "[concat(variables('keyVaultName'), '/StorageAccountKey')]",
+      "apiVersion": "2015-06-01",
+      "properties": {
+        "contentType": "text/plain",
+        "value": "[reference('linkedStorageAccountTemplate').outputs.storageKey.value]"
+      },
+      "dependsOn": [
+        "[resourceId('Microsoft.Resources/deployments', 'linkedStorageAccountTemplate')]"
+      ]
     }
   ],
   "outputs": {
