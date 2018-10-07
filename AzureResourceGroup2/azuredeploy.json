@@ -15,23 +15,36 @@
   },
   "variables": {
     "storageAccountName": "[toLower(concat(parameters('ResourceBaseName'), 'chatbotstorage'))]",
-    "_artifactsLocation": {
-      "defaultValue": "[deployment().properties.templateLink.uri]"
-    }
+    "_artifactsLocation": "https://raw.githubusercontent.com"
   },
   "resources": [
     {
       "apiVersion": "2017-05-10",
-      "name": "linkedTemplate",
+      "name": "linkedStorageAccountTemplate",
       "type": "Microsoft.Resources/deployments",
       "properties": {
         "mode": "Incremental",
         "templateLink": {
-          "uri": "[uri(variables('_artifactsLocation'), '/StorageAccount.json')]"
+          "uri": "[uri(variables('_artifactsLocation'), '/aviatoredb/ARMTests/master/AzureResourceGroup2/StorageAccount.json')]"
         },
         "parameters": {
           "storageAccountName": { "value": "[variables('storageAccountName')]" },
-          "location": { "value": "[parameters('ResourceGroupLocation')]" }
+          "storageAccountLocation": { "value": "[parameters('ResourceGroupLocation')]" }
+        }
+      }
+    },
+    {
+      "apiVersion": "2017-05-10",
+      "name": "linkedAzureVaultTemplate",
+      "type": "Microsoft.Resources/deployments",
+      "properties": {
+        "mode": "Incremental",
+        "templateLink": {
+          "uri": "[uri(variables('_artifactsLocation'), '/aviatoredb/ARMTests/master/AzureResourceGroup2/KeyVault.json')]"
+        },
+        "parameters": {
+          "storageAccountName": { "value": "[variables('storageAccountName')]" },
+          "storageAccountLocation": { "value": "[parameters('ResourceGroupLocation')]" }
         }
       }
     }
