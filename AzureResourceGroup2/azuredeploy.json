@@ -43,8 +43,7 @@
           "uri": "[uri(variables('_artifactsLocation'), '/aviatoredb/ARMTests/master/AzureResourceGroup2/KeyVault.json')]"
         },
         "parameters": {
-          "storageAccountName": { "value": "[variables('storageAccountName')]" },
-          "storageAccountLocation": { "value": "[parameters('ResourceGroupLocation')]" }
+          //"storageAccountLocation": { "value": "[parameters('ResourceGroupLocation')]" }
         }
       }
     }

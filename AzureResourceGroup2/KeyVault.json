@@ -45,15 +45,6 @@
       "metadata": {
         "description": "SKU for the vault"
       }
-    },
-    "keyVaultNetworkAcls": {
-      "type": "object",
-      "value": {
-        "defaultAction": "Allow",
-        "bypass": "AzureServices",
-        "virtualNetworkRules": [],
-        "ipRules": []
-      }
     }
 
   },
@@ -74,8 +65,7 @@
         "sku": {
           "name": "[parameters('keyVaultSku')]",
           "family": "A"
-        },
-        "networkAcls": "[parameters('keyVaultNetworkAcls')]"
+        }
       }
     }
   ],
