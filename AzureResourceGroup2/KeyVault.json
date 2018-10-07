@@ -72,7 +72,7 @@
   "outputs": {
     "storageId": {
       "type": "string",
-      "value": "[resourceId('Microsoft.Storage/storageAccounts/', parameters('keyVaultName'))]"
+      "value": "[resourceId('Microsoft.KeyVault/vaults/', parameters('keyVaultName'))]"
     }
   }
 }
