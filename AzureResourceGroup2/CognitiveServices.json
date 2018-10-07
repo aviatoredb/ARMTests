@@ -1,0 +1,94 @@
+﻿{
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "cognitiveServiceBaseNameName": {
+      "type": "string"
+    },
+    "luisLocation": {
+      "type": "string",
+      "defaultValue": "[resourceGroup().location]",
+      "metadata": {
+        "description": "Location for all resources."
+      }
+    },
+    "textTranslatorApiType": {
+      "type": "string",
+      "defaultValue": "TextTranslation"
+    },
+    "textTranslatorSku": {
+      "type": "string",
+      "defaultValue": "S1"
+    },
+    "spellCheckApiType": {
+      "type": "string",
+      "defaultValue": "Bing.SpellCheck.v7"
+    },
+    "spellCheckSku": {
+      "type": "string",
+      "defaultValue": "F0"
+    },
+    "luisApiType": {
+      "type": "string",
+      "defaultValue": "LUIS"
+    },
+    "luisSku": {
+      "type": "string",
+      "defaultValue": "F0"
+    }
+  },
+  "variables": {
+    "textTranslatorName": "[concat(parameters('cognitiveServiceBaseNameName'), 'TextTranslator')]",
+    "spellCheckName": "[concat(parameters('cognitiveServiceBaseNameName'), 'SpellCheck')]",
+    "luisName": "[concat(parameters('cognitiveServiceBaseNameName'), 'LuisAI')]"
+  },
+  "resources": [
+    {
+      "apiVersion": "2016-02-01-preview",
+      "name": "[variables('textTranslatorName')]",
+      "location": "global",
+      "type": "Microsoft.CognitiveServices/accounts",
+      "kind": "[parameters('textTranslatorApiType')]",
+      "sku": {
+        "name": "[parameters('textTranslatorSku')]"
+      },
+      "properties": {}
+    },
+    {
+      "apiVersion": "2016-02-01-preview",
+      "name": "[variables('spellCheckName')]",
+      "location": "global",
+      "type": "Microsoft.CognitiveServices/accounts",
+      "kind": "[parameters('spellCheckApiType')]",
+      "sku": {
+        "name": "[parameters('spellCheckSku')]"
+      },
+      "properties": {}
+    },
+    {
+      "apiVersion": "2016-02-01-preview",
+      "name": "[variables('luisName')]",
+      "location": "[parameters('luisLocation')]",
+      "type": "Microsoft.CognitiveServices/accounts",
+      "kind": "[parameters('luisApiType')]",
+      "sku": {
+        "name": "[parameters('luisSku')]"
+      },
+      "properties": {}
+    }
+  ],
+  "outputs": {
+    "spellCheckKey": {
+      "type": "string",
+      "value": "[listkeys(resourceId('Microsoft.CognitiveServices/accounts/', variables('spellCheckName')), '2016-02-01-preview').key1]"
+    },
+    "textTranslateKey": {
+      "type": "string",
+      "value": "[listkeys(resourceId('Microsoft.CognitiveServices/accounts/', variables('textTranslatorName')), '2016-02-01-preview').key1]"
+    },
+    "luisKey": {
+      "type": "string",
+      "value": "[listkeys(resourceId('Microsoft.CognitiveServices/accounts/', variables('luisName')), '2016-02-01-preview').key1]"
+    }
+  }
+}

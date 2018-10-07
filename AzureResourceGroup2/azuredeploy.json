@@ -19,6 +19,7 @@
   "variables": {
     "storageAccountName": "[toLower(concat(parameters('ResourceBaseName'), 'chatbotstorage'))]",
     "keyVaultName": "[toLower(concat(parameters('ResourceBaseName'), 'KeyVault'))]",
+    "cogSvcBaseNameName": "[toLower(concat(parameters('ResourceBaseName'), 'CogSvc'))]",
     "_artifactsLocation": "https://raw.githubusercontent.com"
   },
   "resources": [
@@ -49,6 +50,20 @@
         "parameters": {
           "keyVaultName": { "value": "[variables('keyVaultName')]" },
           "keyVaultADTenantId": { "value": "[parameters('activeDirectoryTenantId')]" }
+        }
+      }
+    },
+    {
+      "apiVersion": "2017-05-10",
+      "name": "linkedAzureVaultTemplate",
+      "type": "Microsoft.Resources/deployments",
+      "properties": {
+        "mode": "Incremental",
+        "templateLink": {
+          "uri": "[uri(variables('_artifactsLocation'), '/aviatoredb/ARMTests/master/AzureResourceGroup2/CognitiveServices.json')]"
+        },
+        "parameters": {
+          "cognitiveServiceBaseNameName": { "value": "[variables('keyVaultName')]" }
         }
       }
     },
