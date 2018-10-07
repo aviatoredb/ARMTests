@@ -55,7 +55,7 @@
     },
     {
       "apiVersion": "2017-05-10",
-      "name": "linkedAzureVaultTemplate",
+      "name": "linkedCognitiveServiceTemplate",
       "type": "Microsoft.Resources/deployments",
       "properties": {
         "mode": "Incremental",
@@ -77,6 +77,42 @@
       },
       "dependsOn": [
         "[resourceId('Microsoft.Resources/deployments', 'linkedStorageAccountTemplate')]"
+      ]
+    },
+    {
+      "type": "Microsoft.KeyVault/vaults/secrets",
+      "name": "[concat(variables('keyVaultName'), '/BingSpellCheckKey')]",
+      "apiVersion": "2015-06-01",
+      "properties": {
+        "contentType": "text/plain",
+        "value": "[reference('linkedCognitiveServiceTemplate').outputs.spellCheckKey.value]"
+      },
+      "dependsOn": [
+        "[resourceId('Microsoft.Resources/deployments', 'linkedCognitiveServiceTemplate')]"
+      ]
+    },
+    {
+      "type": "Microsoft.KeyVault/vaults/secrets",
+      "name": "[concat(variables('keyVaultName'), '/TextTranslateKey')]",
+      "apiVersion": "2015-06-01",
+      "properties": {
+        "contentType": "text/plain",
+        "value": "[reference('linkedCognitiveServiceTemplate').outputs.textTranslateKey.value]"
+      },
+      "dependsOn": [
+        "[resourceId('Microsoft.Resources/deployments', 'linkedCognitiveServiceTemplate')]"
+      ]
+    },
+    {
+      "type": "Microsoft.KeyVault/vaults/secrets",
+      "name": "[concat(variables('keyVaultName'), '/LUIServiceKey')]",
+      "apiVersion": "2015-06-01",
+      "properties": {
+        "contentType": "text/plain",
+        "value": "[reference('linkedCognitiveServiceTemplate').outputs.luisKey.value]"
+      },
+      "dependsOn": [
+        "[resourceId('Microsoft.Resources/deployments', 'linkedCognitiveServiceTemplate')]"
       ]
     }
   ],
