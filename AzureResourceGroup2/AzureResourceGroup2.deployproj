@@ -25,7 +25,7 @@
   <ItemGroup>
     <Content Include="azuredeploy.json" />
     <Content Include="azuredeploy.parameters.json" />
-    <None Include="azuredeploy1.json" />
+    <None Include="BotService.json" />
     <None Include="CognitiveServices.json" />
     <None Include="KeyVault.json" />
     <None Include="StorageAccount.json" />

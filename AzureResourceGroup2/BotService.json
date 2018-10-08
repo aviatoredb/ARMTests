@@ -1,0 +1,72 @@
+﻿{
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "botServiceBaseName": {
+      "type": "string",
+      "metadata": {
+        "description": "Azure Storage account name."
+      }
+    },
+    "location": {
+      "type": "string",
+      "defaultValue": "[resourceGroup().location]",
+      "metadata": {
+        "description": "Location for all resources."
+      }
+    },
+    "serverFarmSku": {
+      "type": "object",
+      "defaultValue": {
+        "name": "S1",
+        "tier": "Standard",
+        "size": "S1",
+        "family": "S",
+        "capacity": 1
+      }
+    },
+    "slotDefinitions": {      
+      "type": "array",
+      "defaultValue": [
+        "prod",
+        "dev"
+      ]
+    }
+  },
+  "variables": {
+    "appServicePlanName": "[concat(parameters('botServiceBaseName'), 'ServicePlan')]",
+    "serviceName": "[concat(parameters('botServiceBaseName'), 'AppService')]"
+  },
+  "resources": [
+    {
+      "type": "Microsoft.Web/serverfarms",
+      "name": "[variables('appServicePlanName')]",
+      "apiVersion": "2016-09-01",
+      "location": "[parameters('location')]",
+      "sku": "[parameters('serverFarmSku')]",
+      "properties": {
+        "name": "[variables('appServicePlanName')]"
+      }
+    },
+    {
+      "name": "[variables('serviceName')]",
+      "type": "Microsoft.Web/sites",
+      "apiVersion": "2015-08-01",
+      "location": "[parameters('location')]",
+      "kind": "app",
+      "dependsOn": [
+        "[variables('appServicePlanName')]"
+      ],
+      "properties": {
+        "serverFarmId": "[variables('appServicePlanName')]",
+        "siteConfig": {
+          "AlwaysOn": true
+        }
+      },
+      "resources": [
+      ]
+    }
+  ],
+  "outputs": {
+  }
+}
