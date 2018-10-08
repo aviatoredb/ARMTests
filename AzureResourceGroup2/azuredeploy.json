@@ -94,9 +94,9 @@
         },
         "parameters": {
           "botServiceBaseName": { "value": "[variables('botServiceName')]" },
-          "storageAccountId": "[reference('linkedStorageAccountTemplate').outputs.storageId.value]",
-          "storageAccountKey": "[reference('linkedStorageAccountTemplate').outputs.storageKey.value]",
-          "storageAccountName": "[variables('storageAccountName')]"
+          "storageAccountId": { "value": "[reference('linkedStorageAccountTemplate').outputs.storageId.value]" },
+          "storageAccountKey": { "value": "[reference('linkedStorageAccountTemplate').outputs.storageKey.value]" },
+          "storageAccountName": { "value": "[variables('storageAccountName')]" }
         }
       }
     },
@@ -150,17 +150,5 @@
     }
   ],
   "outputs": {
-    "storageAccountId": {
-      "type": "string",
-      "value": "[reference('linkedStorageAccountTemplate').outputs.storageId.value]"
-    },
-    "storageAccountKey": {
-      "type": "string",
-      "value": "[reference('linkedStorageAccountTemplate').outputs.storageKey.value]"
-    },
-    "keyVaultId": {
-      "type": "string",
-      "value": "[reference('linkedAzureVaultTemplate').outputs.vaultId.value]"
-    }
   }
 }
