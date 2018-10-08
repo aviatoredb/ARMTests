@@ -67,7 +67,7 @@
     "botId1": "[concat(variables('serviceName'), '_', variables('Slot1Name'))]",
     "slot1InsightsName": "[concat(variables('botId1'), substring(uniqueString(resourceGroup().id), 0, 6))]",
     "slot2Name": "dev",
-    "botId2": "[concat(variables('serviceName'), '_', variables('Slot1Name'))]",
+    "botId2": "[concat(variables('serviceName'), '_', variables('Slot2Name'))]",
     "slot2InsightsName": "[concat(variables('botId2'), substring(uniqueString(resourceGroup().id), 0, 6))]"
   },
   "resources": [
