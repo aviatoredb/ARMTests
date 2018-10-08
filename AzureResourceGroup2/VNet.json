@@ -77,7 +77,7 @@
     "vNetName": "[concat(parameters('vNetBaseName'), 'VNet')]",
     "vNetAddressPrefix": "[concat(parameters('vNetBaseNetwork'), '/25')]",
     "vNetSubnetAddressPrefix": "[concat(parameters('vNetBaseNetwork'), '/26')]",
-    "vNetGatewaySubnetAddressPrefix": "[concat(substring(parameters('vNetBaseNetwork'), 0, lastIndexOf(parameters('vNetBaseNetwork'), '.')), '96/26')]" //172.31.30.96/27
+    "vNetGatewaySubnetAddressPrefix": "[concat(substring(parameters('vNetBaseNetwork'), 0, lastIndexOf(parameters('vNetBaseNetwork'), '.')), '.96/26')]" //172.31.30.96/27
   },
   "resources": [
     {
@@ -163,7 +163,7 @@
         "vpnClientConfiguration": {
           "vpnClientAddressPool": {
             "addressPrefixes": [
-              "[concat(substring(parameters('vNetBaseNetwork'), 0, lastIndexOf(parameters('vNetBaseNetwork'), '.')), '128/26')]" ////172.31.30.128/26
+              "[concat(substring(parameters('vNetBaseNetwork'), 0, lastIndexOf(parameters('vNetBaseNetwork'), '.')), '.128/26')]" ////172.31.30.128/26
             ]
           },
           "vpnClientProtocols": [
