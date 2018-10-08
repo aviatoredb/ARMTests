@@ -10,6 +10,12 @@ Param(
     [string] $TemplateParametersFile = 'azuredeploy.parameters.json',
     [string] $ArtifactStagingDirectory = '.',
     [string] $DSCSourceFolder = 'DSC',
+    #[string] $ActiveDirectoryTenant = "f9127298-458c-4ec3-a44f-6baf96f4ed36",
+    #[string] $AdminUserObjectId = "87f3ae05-e450-4607-b4c8-e0b464933d69",    
+    #[string] $Slot1AppId = "2f0e0b50-1a28-415a-be57-1196670a0d11",
+    #[string] $Slot1AppSecret = "pzDHXBK80=!cofthIQ925!+",
+    #[string] $Slot2AppId = "bd96e179-d408-4420-afbd-9947d0edbf09",
+    #[string] $Slot2AppSecret = "tifCAF320^?]kestBPBW57*",
     [switch] $ValidateOnly
 )
 

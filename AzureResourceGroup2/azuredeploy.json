@@ -5,6 +5,9 @@
     "activeDirectoryTenantId": {
       "type": "string"
     },
+    "adminUserObjectId": {
+      "type": "string"
+    },
     "ResourceBaseName": {
       "type": "string"
     },
@@ -14,6 +17,18 @@
       "metadata": {
         "description": "Location for all resources."
       }
+    },
+    "slot1AppId": {
+      "type": "string"
+    },
+    "slot1AppSecret": {
+      "type": "string"
+    },
+    "slot2AppId": {
+      "type": "string"
+    },
+    "slot2AppSecret": {
+      "type": "string"
     }
   },
   "variables": {
@@ -96,7 +111,12 @@
           "botServiceBaseName": { "value": "[variables('botServiceName')]" },
           "storageAccountId": { "value": "[reference('linkedStorageAccountTemplate').outputs.storageId.value]" },
           "storageAccountKey": { "value": "[reference('linkedStorageAccountTemplate').outputs.storageKey.value]" },
-          "storageAccountName": { "value": "[variables('storageAccountName')]" }
+          "storageAccountName": { "value": "[variables('storageAccountName')]" },
+          "slot1AppId": { "value": "[parameters('slot1AppId')]" },
+          "slot1AppSecret": { "value": "[parameters('slot1AppSecret')]" },
+          "slot2AppId": { "value": "[parameters('slot2AppId')]" },
+          "slot2AppSecret": { "value": "[parameters('slot2AppSecret')]" }
+
         }
       }
     },

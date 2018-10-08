@@ -15,13 +15,13 @@
     "slot1AppId": {
       "type": "string"
     },
-    "Slot1AppSecret": {
+    "slot1AppSecret": {
       "type": "string"
     },
     "slot2AppId": {
       "type": "string"
     },
-    "Slot2AppSecret": {
+    "slot2AppSecret": {
       "type": "string"
     },
     "location": {
@@ -137,11 +137,11 @@
             },
             {
               "name": "MicrosoftAppId",
-              "value": "[parameters('Slot1AppId')]"
+              "value": "[parameters('slot1AppId')]"
             },
             {
               "name": "MicrosoftAppPassword",
-              "value": "[parameters('Slot1AppSecret')]"
+              "value": "[parameters('slot1AppSecret')]"
             },
             {
               "name": "UseTableStorageForConversationState",
