@@ -146,19 +146,19 @@
             {
               "name": "UseTableStorageForConversationState",
               "value": "true"
-            },
-            {
-              "name": "BotDevAppInsightsKey",
-              "value": "[reference(resourceId('microsoft.insights/components/', variables('slot1InsightsName')), '2015-05-01').InstrumentationKey]"
-            },
-            {
-              "name": "BotDevAppInsightsName",
-              "value": "[variables('slot1InsightsName')]"
-            },
-            {
-              "name": "BotDevAppInsightsAppId",
-              "value": "[reference(resourceId('microsoft.insights/components/', variables('slot1InsightsName')), '2015-05-01').AppId]"
-            }
+            }//,
+            //{
+            //  "name": "BotDevAppInsightsKey",
+            //  "value": "[reference(resourceId('microsoft.insights/components/', variables('slot1InsightsName')), '2015-05-01').InstrumentationKey]"
+            //},
+            //{
+            //  "name": "BotDevAppInsightsName",
+            //  "value": "[variables('slot1InsightsName')]"
+            //},
+            //{
+            //  "name": "BotDevAppInsightsAppId",
+            //  "value": "[reference(resourceId('microsoft.insights/components/', variables('slot1InsightsName')), '2015-05-01').AppId]"
+            //}
           ],
           "cors": {
             "allowedOrigins": [
