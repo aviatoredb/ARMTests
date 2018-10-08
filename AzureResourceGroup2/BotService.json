@@ -99,8 +99,8 @@
     },
     {
       "apiVersion": "2016-08-01",
-      "name": "[concat('slots/', variables('Slot1Name'))]",
-      "type": "Microsoft.Web/sites",
+      "name": "[concat(variables('serviceName'), '/', variables('Slot1Name'))]",
+      "type": "Microsoft.Web/sites/slots",
       "identity": { "type": "systemAssigned" },
       "tags": {
         "displayName": "[concat(toUpper(variables('Slot1Name')), ' Slot')]"
