@@ -8,11 +8,45 @@
         "description": "Azure Storage account name."
       }
     },
+    "botEnv": {
+      "type": "string",
+      "defaultValue": "prod"
+    },
+    "slot1AppId": {
+      "type": "string"
+    },
+    "Slot1AppSecret": {
+      "type": "string"
+    },
+    "slot2AppId": {
+      "type": "string"
+    },
+    "Slot2AppSecret": {
+      "type": "string"
+    },
     "location": {
       "type": "string",
       "defaultValue": "[resourceGroup().location]",
       "metadata": {
         "description": "Location for all resources."
+      }
+    },
+    "storageAccountName": {
+      "type": "string",
+      "metadata": {
+        "description": "Azure Storage account resource name."
+      }
+    },
+    "storageAccountId": {
+      "type": "string",
+      "metadata": {
+        "description": "Azure Storage account resource id."
+      }
+    },
+    "storageAccountKey": {
+      "type": "string",
+      "metadata": {
+        "description": "Azure Storage account key."
       }
     },
     "serverFarmSku": {
@@ -24,18 +58,17 @@
         "family": "S",
         "capacity": 1
       }
-    },
-    "slotDefinitions": {      
-      "type": "array",
-      "defaultValue": [
-        "prod",
-        "dev"
-      ]
     }
   },
   "variables": {
     "appServicePlanName": "[concat(parameters('botServiceBaseName'), 'ServicePlan')]",
-    "serviceName": "[concat(parameters('botServiceBaseName'), 'AppService')]"
+    "serviceName": "[concat(parameters('botServiceBaseName'), 'AppService')]",
+    "slot1Name": "prod",
+    "botId1": "[concat(variables('serviceName'), '_', variables('Slot1Name'))]",
+    "slot1InsightsName": "",
+    "slot2Name": "dev",
+    "botId2": "[concat(variables('serviceName'), '_', variables('Slot1Name'))]",
+    "slot2InsightsName": ""
   },
   "resources": [
     {
@@ -61,6 +94,78 @@
         "serverFarmId": "[variables('appServicePlanName')]",
         "siteConfig": {
           "AlwaysOn": true
+        }
+      }
+    },
+    {
+      "apiVersion": "2016-08-01",
+      "name": "[variables('Slot1Name')]",
+      "type": "Microsoft.Web/sites/slots",
+      "identity": { "type": "systemAssigned" },
+      "tags": {
+        "displayName": "[concat(toUpper(variables('Slot1Name')), ' Slot')]"
+      },
+      "location": "[parameters('location')]",
+      "dependsOn": [
+        "[parameters('storageAccountId')]",
+        "[resourceId('Microsoft.Web/Sites', variables('serviceName'))]"
+      ],
+      "properties": {
+        "serverFarmId": "[variables('appServicePlanName')]",
+        "siteConfig": {
+          "AlwaysOn": true,
+          "appSettings": [
+            {
+              "name": "AzureWebJobsStorage",
+              "value": "[concat('DefaultEndpointsProtocol=https;AccountName=',parameters('storageAccountName'),';AccountKey=', parameters('storageAccountKey'),';')]"
+            },
+            {
+              "name": "AzureWebJobsDashboard",
+              "value": "[concat('DefaultEndpointsProtocol=https;AccountName=',parameters('storageAccountName'),';AccountKey=',parameters('storageAccountKey'),';')]"
+            },
+            {
+              "name": "WEBSITE_NODE_DEFAULT_VERSION",
+              "value": "6.9.1"
+            },
+            {
+              "name": "BotEnv",
+              "value": "[parameters('botEnv')]"
+            },
+            {
+              "name": "BotId",
+              "value": "[variables('botId1')]"
+            },
+            {
+              "name": "MicrosoftAppId",
+              "value": "[parameters('Slot1AppId')]"
+            },
+            {
+              "name": "MicrosoftAppPassword",
+              "value": "[parameters('Slot1AppSecret')]"
+            },
+            {
+              "name": "UseTableStorageForConversationState",
+              "value": "true"
+            },
+            {
+              "name": "BotDevAppInsightsKey",
+              "value": "[reference(resourceId('microsoft.insights/components/', variables('slot1InsightsName')), '2015-05-01').InstrumentationKey]"
+            },
+            {
+              "name": "BotDevAppInsightsName",
+              "value": "[variables('slot1InsightsName')]"
+            },
+            {
+              "name": "BotDevAppInsightsAppId",
+              "value": "[reference(resourceId('microsoft.insights/components/', variables('slot1InsightsName')), '2015-05-01').AppId]"
+            }
+          ],
+          "cors": {
+            "allowedOrigins": [
+              "https://botservice.hosting.portal.azure.net",
+              "https://hosting.onecloud.azure-test.net/"
+            ]
+          }
         }
       },
       "resources": [

@@ -21,7 +21,8 @@
     "keyVaultName": "[toLower(concat(parameters('ResourceBaseName'), 'KeyVault'))]",
     "vNetName": "[toLower(concat(parameters('ResourceBaseName'), 'VNet'))]",
     "cogSvcBaseNameName": "[toLower(concat(parameters('ResourceBaseName'), 'CogSvc'))]",
-    "_artifactsLocation": "https://raw.githubusercontent.com"
+    "_artifactsLocation": "https://raw.githubusercontent.com",
+    "botServiceName": "[toLower(concat(parameters('ResourceBaseName'), 'BotSvc'))]"
   },
   "resources": [
     {
@@ -79,6 +80,23 @@
         },
         "parameters": {
           "vNetBaseName": { "value": "[variables('vNetName')]" }
+        }
+      }
+    },
+    {
+      "apiVersion": "2017-05-10",
+      "name": "linkedBotServiceTemplate",
+      "type": "Microsoft.Resources/deployments",
+      "properties": {
+        "mode": "Incremental",
+        "templateLink": {
+          "uri": "[uri(variables('_artifactsLocation'), '/aviatoredb/ARMTests/master/AzureResourceGroup2/BotService.json')]"
+        },
+        "parameters": {
+          "botServiceBaseName": { "value": "[variables('botServiceName')]" },
+          "storageAccountId": "[reference('linkedStorageAccountTemplate').outputs.storageId.value]",
+          "storageAccountKey": "[reference('linkedStorageAccountTemplate').outputs.storageKey.value]",
+          "storageAccountName": "[reference('linkedStorageAccountTemplate').outputs.storageName.value]"
         }
       }
     },

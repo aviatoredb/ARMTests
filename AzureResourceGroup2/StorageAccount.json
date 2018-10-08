@@ -38,6 +38,10 @@
     "storageKey": {
       "type": "string",
       "value": "[listkeys(resourceId('Microsoft.Storage/storageAccounts/', parameters('storageAccountName')), '2015-05-01-preview').key1]"
+    },
+    "storageName": {
+      "type": "string",
+      "value": "[parameters('storageAccountName')]"
     }
   }
 }
