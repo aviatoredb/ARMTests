@@ -109,7 +109,6 @@
         "ApplicationId": "[variables('botId2')]"
       }
     },
-
     {
       "name": "[variables('serviceName')]",
       "type": "Microsoft.Web/sites",
@@ -157,7 +156,7 @@
             },
             {
               "name": "BotEnv",
-              "value": "[parameters('botEnv')]"
+              "value": "[variables('slot1Name')]"
             },
             {
               "name": "BotId",
@@ -174,7 +173,7 @@
             {
               "name": "UseTableStorageForConversationState",
               "value": "true"
-            } ,
+            },
             {
               "name": "BotDevAppInsightsKey",
               "value": "[reference(resourceId('microsoft.insights/components/', variables('slot1InsightsName')), '2015-05-01').InstrumentationKey]"
@@ -186,6 +185,79 @@
             {
               "name": "BotDevAppInsightsAppId",
               "value": "[reference(resourceId('microsoft.insights/components/', variables('slot1InsightsName')), '2015-05-01').AppId]"
+            }
+          ],
+          "cors": {
+            "allowedOrigins": [
+              "https://botservice.hosting.portal.azure.net",
+              "https://hosting.onecloud.azure-test.net/"
+            ]
+          }
+        }
+      },
+      "resources": [
+      ]
+    },
+    {
+      "apiVersion": "2016-08-01",
+      "name": "[concat(variables('serviceName'), '/', variables('Slot2Name'))]",
+      "type": "Microsoft.Web/sites/slots",
+      "identity": { "type": "systemAssigned" },
+      "tags": {
+        "displayName": "[concat(toUpper(variables('Slot2Name')), ' Slot')]"
+      },
+      "location": "[parameters('location')]",
+      "dependsOn": [
+        "[resourceId('Microsoft.Web/Sites', variables('serviceName'))]"
+      ],
+      "properties": {
+        "serverFarmId": "[variables('appServicePlanName')]",
+        "siteConfig": {
+          "AlwaysOn": true,
+          "appSettings": [
+            {
+              "name": "AzureWebJobsStorage",
+              "value": "[concat('DefaultEndpointsProtocol=https;AccountName=',parameters('storageAccountName'),';AccountKey=', parameters('storageAccountKey'),';')]"
+            },
+            {
+              "name": "AzureWebJobsDashboard",
+              "value": "[concat('DefaultEndpointsProtocol=https;AccountName=',parameters('storageAccountName'),';AccountKey=',parameters('storageAccountKey'),';')]"
+            },
+            {
+              "name": "WEBSITE_NODE_DEFAULT_VERSION",
+              "value": "6.9.1"
+            },
+            {
+              "name": "BotEnv",
+              "value": "[variables('slot2Name')]"
+            },
+            {
+              "name": "BotId",
+              "value": "[variables('botId2')]"
+            },
+            {
+              "name": "MicrosoftAppId",
+              "value": "[parameters('slot2AppId')]"
+            },
+            {
+              "name": "MicrosoftAppPassword",
+              "value": "[parameters('slot2AppSecret')]"
+            },
+            {
+              "name": "UseTableStorageForConversationState",
+              "value": "true"
+            },
+            {
+              "name": "BotDevAppInsightsKey",
+              "value": "[reference(resourceId('microsoft.insights/components/', variables('slot2InsightsName')), '2015-05-01').InstrumentationKey]"
+            },
+            {
+              "name": "BotDevAppInsightsName",
+              "value": "[variables('slot2InsightsName')]"
+            },
+            {
+              "name": "BotDevAppInsightsAppId",
+              "value": "[reference(resourceId('microsoft.insights/components/', variables('slot2InsightsName')), '2015-05-01').AppId]"
             }
           ],
           "cors": {
