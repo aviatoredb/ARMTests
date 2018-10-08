@@ -65,10 +65,10 @@
     "serviceName": "[concat(parameters('botServiceBaseName'), 'AppService')]",
     "slot1Name": "prod",
     "botId1": "[concat(variables('serviceName'), '_', variables('Slot1Name'))]",
-    "slot1InsightsName": "",
+    "slot1InsightsName": "[concat(variables('botId1'), substring(uniqueString(resourceGroup().id), 0, 6))]",
     "slot2Name": "dev",
     "botId2": "[concat(variables('serviceName'), '_', variables('Slot1Name'))]",
-    "slot2InsightsName": ""
+    "slot2InsightsName": "[concat(variables('botId2'), substring(uniqueString(resourceGroup().id), 0, 6))]"
   },
   "resources": [
     {
@@ -81,6 +81,35 @@
         "name": "[variables('appServicePlanName')]"
       }
     },
+    {
+      "name": "[variables('slot1InsightsName')]",
+      "type": "microsoft.insights/components",
+      "kind": "web",
+      "apiVersion": "2017-07-01-preview",
+      "location": "[parameters('location')]",
+      "tags": {
+        "[concat('hidden-link:', resourceId('Microsoft.BotService/botServices/', variables('botId1')))]": "Resource",
+        "[concat('hidden-link:', resourceId('Microsoft.Web/sites/', variables('serviceName')))]": "Resource"
+      },
+      "properties": {
+        "ApplicationId": "[variables('botId1')]"
+      }
+    },
+    {
+      "name": "[variables('slot2InsightsName')]",
+      "type": "microsoft.insights/components",
+      "kind": "web",
+      "apiVersion": "2017-07-01-preview",
+      "location": "[parameters('location')]",
+      "tags": {
+        "[concat('hidden-link:', resourceId('Microsoft.BotService/botServices/', variables('botId2')))]": "Resource",
+        "[concat('hidden-link:', resourceId('Microsoft.Web/sites/', variables('serviceName')))]": "Resource"
+      },
+      "properties": {
+        "ApplicationId": "[variables('botId2')]"
+      }
+    },
+
     {
       "name": "[variables('serviceName')]",
       "type": "Microsoft.Web/sites",
@@ -145,19 +174,19 @@
             {
               "name": "UseTableStorageForConversationState",
               "value": "true"
-            } //,
-            //{
-            //  "name": "BotDevAppInsightsKey",
-            //  "value": "[reference(resourceId('microsoft.insights/components/', variables('slot1InsightsName')), '2015-05-01').InstrumentationKey]"
-            //},
-            //{
-            //  "name": "BotDevAppInsightsName",
-            //  "value": "[variables('slot1InsightsName')]"
-            //},
-            //{
-            //  "name": "BotDevAppInsightsAppId",
-            //  "value": "[reference(resourceId('microsoft.insights/components/', variables('slot1InsightsName')), '2015-05-01').AppId]"
-            //}
+            } ,
+            {
+              "name": "BotDevAppInsightsKey",
+              "value": "[reference(resourceId('microsoft.insights/components/', variables('slot1InsightsName')), '2015-05-01').InstrumentationKey]"
+            },
+            {
+              "name": "BotDevAppInsightsName",
+              "value": "[variables('slot1InsightsName')]"
+            },
+            {
+              "name": "BotDevAppInsightsAppId",
+              "value": "[reference(resourceId('microsoft.insights/components/', variables('slot1InsightsName')), '2015-05-01').AppId]"
+            }
           ],
           "cors": {
             "allowedOrigins": [
