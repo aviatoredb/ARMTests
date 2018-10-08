@@ -99,7 +99,7 @@
     },
     {
       "apiVersion": "2016-08-01",
-      "name": "slots/[variables('Slot1Name')]",
+      "name": "[variables('Slot1Name')]",
       "type": "Microsoft.Web/sites",
       "identity": { "type": "systemAssigned" },
       "tags": {
