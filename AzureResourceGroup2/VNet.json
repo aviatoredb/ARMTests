@@ -70,7 +70,6 @@
       "type": "string",
       "defaultValue": "VpnGw1"
     }
-
   },
   "variables": {
     "publicIPName": "[concat(parameters('vNetBaseName'), 'VNetGatewayPiP')]",
@@ -95,7 +94,6 @@
         "publicIpAddressVersion": "[parameters('publicIpAddressVersion')]"
       }
     },
-
     {
       "apiVersion": "2018-08-01",
       "name": "[variables('vNetName')]",
@@ -133,7 +131,6 @@
         "enableDdosProtection": "[parameters('vNetEnableDdosProtection')]"
       }
     },
-
     {
       "apiVersion": "2018-08-01",
       "name": "[variables('vNetGatewayName')]",
@@ -173,10 +170,9 @@
             "SSTP"
           ]
         }
-
       }
     }
   ],
-      "outputs": {
-      }     
+  "outputs": {
+  }
 }
