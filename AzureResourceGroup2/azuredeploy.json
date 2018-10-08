@@ -96,7 +96,7 @@
           "botServiceBaseName": { "value": "[variables('botServiceName')]" },
           "storageAccountId": "[reference('linkedStorageAccountTemplate').outputs.storageId.value]",
           "storageAccountKey": "[reference('linkedStorageAccountTemplate').outputs.storageKey.value]",
-          "storageAccountName": "[reference('linkedStorageAccountTemplate').outputs.storageName.value]"
+          "storageAccountName": "[variables('storageAccountName')]"
         }
       }
     },
