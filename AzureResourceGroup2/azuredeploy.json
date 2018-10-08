@@ -118,7 +118,10 @@
           "slot2AppSecret": { "value": "[parameters('slot2AppSecret')]" }
 
         }
-      }
+      },
+      "dependsOn": [
+        "[resourceId('Microsoft.Resources/deployments', 'linkedStorageAccountTemplate')]"
+      ]
     },
     {
       "type": "Microsoft.KeyVault/vaults/secrets",

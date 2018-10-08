@@ -107,7 +107,6 @@
       },
       "location": "[parameters('location')]",
       "dependsOn": [
-        "[parameters('storageAccountId')]",
         "[resourceId('Microsoft.Web/Sites', variables('serviceName'))]"
       ],
       "properties": {
