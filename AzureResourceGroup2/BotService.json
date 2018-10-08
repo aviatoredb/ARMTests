@@ -99,7 +99,7 @@
     },
     {
       "apiVersion": "2016-08-01",
-      "name": "[variables('Slot1Name')]",
+      "name": "[concat('slots/', variables('Slot1Name'))]",
       "type": "Microsoft.Web/sites",
       "identity": { "type": "systemAssigned" },
       "tags": {
@@ -145,7 +145,7 @@
             {
               "name": "UseTableStorageForConversationState",
               "value": "true"
-            }//,
+            } //,
             //{
             //  "name": "BotDevAppInsightsKey",
             //  "value": "[reference(resourceId('microsoft.insights/components/', variables('slot1InsightsName')), '2015-05-01').InstrumentationKey]"
