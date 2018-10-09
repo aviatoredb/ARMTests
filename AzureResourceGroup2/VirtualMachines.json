@@ -20,31 +20,53 @@
     },
     "storageAccountName": {
       "type": "string"
+    },
+    "scheduleRunDays": {
+      "type": "array",
+      "defaultValue": [ "Sunday", "Tuesday", "Thursday" ]
+    },
+    "scheduleRunTimes": {
+      "type": "array",
+      "defaultValue": [ "2016-09-21T05:30:00Z" ]
+    },
+    "timeZone": {
+      "type": "string",
+      "defaultValue": "UTC"
+    },
+    "weeklyRetentionDurationCount": {
+      "type": "int",
+      "defaultValue": 52
+    },
+    "daysOfTheWeekForMontlyRetention": {
+      "type": "array",
+      "defaultValue": [ "Sunday", "Tuesday" ]
+    },
+    "weeksOfTheMonthForMonthlyRetention": {
+      "type": "array",
+      "defaultValue": [ "First", "Third" ]
+    },
+    "monthlyRetentionDurationCount": {
+      "type": "int",
+      "defaultValue": 30
+    },
+    "monthsOfYear": {
+      "type": "array",
+      "defaultValue": [ "January", "March", "August" ]
+    },
+    "daysOfTheWeekForYearlyRetention": {
+      "type": "array",
+      "defaultValue": [ "Sunday", "Tuesday" ]
+    },
+    "weeksOfTheMonthForYearlyRetention": {
+      "type": "array",
+      "defaultValue": [ "First", "Third" ]
+    },
+    "yearlyRetentionDurationCount": {
+      "type": "int",
+      "defaultValue": 5
     }
-
-    //"virtualMachines_edbARMTest1_id": {
-    //  "defaultValue": "/subscriptions/3acf32ba-61c3-41ca-ab8d-17b8985c84e6/resourceGroups/VMTest/providers/Microsoft.Compute/disks/edbARMTest1_OsDisk_1_92685ce0f5664c0bb1967d6a52e589db",
-    //  "type": "String"
-    //},
-    //"virtualMachines_edbARMTest2_id": {
-    //  "defaultValue": "/subscriptions/3acf32ba-61c3-41ca-ab8d-17b8985c84e6/resourceGroups/VMTest/providers/Microsoft.Compute/disks/edbARMTest2_OsDisk_1_f1bf5162d49944a984014846af215c24",
-    //  "type": "String"
-    //},
-    //"loadBalancers_edbARMLoadBalancer_id": {
-    //  "defaultValue": "/subscriptions/3acf32ba-61c3-41ca-ab8d-17b8985c84e6/resourceGroups/VMTest/providers/Microsoft.Network/loadBalancers/edbARMLoadBalancer/frontendIPConfigurations/LoadBalancerFrontEnd",
-    //  "type": "String"
-    //},
-    //"loadBalancers_edbARMLoadBalancer_id_1": {
-    //  "defaultValue": "/subscriptions/3acf32ba-61c3-41ca-ab8d-17b8985c84e6/resourceGroups/VMTest/providers/Microsoft.Network/loadBalancers/edbARMLoadBalancer/backendAddressPools/edbARMTestPool",
-    //  "type": "String"
-    //},
-    //"loadBalancers_edbARMLoadBalancer_id_2": {
-    //  "defaultValue": "/subscriptions/3acf32ba-61c3-41ca-ab8d-17b8985c84e6/resourceGroups/VMTest/providers/Microsoft.Network/loadBalancers/edbARMLoadBalancer/probes/edbARMHealthProbe",
-    //  "type": "String"
-    //}
   },
   "variables": {
-    //"virtualNetworksVNet_name": "[concat(parameters('virtualMachineBaseName'), 'VNet')]",
     "virtualMachines1_name": "[concat(take(parameters('virtualMachineBaseName'), 10), 'Test1')]",
     "networkInterfaces1_name": "[concat(parameters('virtualMachineBaseName'), 'test1473')]",
     "publicIPAddresses1_ip_name": "[concat(parameters('virtualMachineBaseName'), 'Test1-ip')]",
@@ -748,26 +770,26 @@
     {
       "type": "Microsoft.RecoveryServices/vaults/backupPolicies",
       "name": "[concat(variables('vaults_VMVault_name'), '/', variables('backupPolicies_WeeklyPolicy_name'))]",
-      "apiVersion": "2016-12-01",
+      "apiVersion": "2016-06-01",
       "dependsOn": [
         "[resourceId('Microsoft.RecoveryServices/vaults', variables('vaults_VMVault_name'))]"
       ],
       "location": "[parameters('location')]",
-      "properties": {
+       "properties": {
         "backupManagementType": "AzureIaasVM",
         "schedulePolicy": {
           "scheduleRunFrequency": "Weekly",
-          "scheduleRunDays": "Sunday",
-          "scheduleRunTimes": "2016-09-21T05:30:00Z",
+          "scheduleRunDays": "[parameters('scheduleRunDays')]",
+          "scheduleRunTimes": "[parameters('scheduleRunTimes')]",
           "schedulePolicyType": "SimpleSchedulePolicy"
         },
         "retentionPolicy": {
           "dailySchedule": null,
           "weeklySchedule": {
-            "daysOfTheWeek": "Sunday",
-            "retentionTimes": "2016-09-21T05:30:00Z",
+            "daysOfTheWeek": "[parameters('scheduleRunDays')]",
+            "retentionTimes": "[parameters('scheduleRunTimes')]",
             "retentionDuration": {
-              "count": "52",
+              "count": "[parameters('weeklyRetentionDurationCount')]",
               "durationType": "Weeks"
             }
           },
@@ -782,18 +804,18 @@
               ]
             },
             "retentionScheduleWeekly": {
-              "daysOfTheWeek": "Sunday, Tuesday",
-              "weeksOfTheMonth": "First, Third"
+              "daysOfTheWeek": "[parameters('daysOfTheWeekForMontlyRetention')]",
+              "weeksOfTheMonth": "[parameters('weeksOfTheMonthForMonthlyRetention')]"
             },
-            "retentionTimes": "2016-09-21T05:30:00Z",
+            "retentionTimes": "[parameters('scheduleRunTimes')]",
             "retentionDuration": {
-              "count": "12",
+              "count": "[parameters('monthlyRetentionDurationCount')]",
               "durationType": "Months"
             }
           },
           "yearlySchedule": {
             "retentionScheduleFormatType": "Weekly",
-            "monthsOfYear": "January, March, August",
+            "monthsOfYear": "[parameters('monthsOfYear')]",
             "retentionScheduleDaily": {
               "daysOfTheMonth": [
                 {
@@ -803,19 +825,19 @@
               ]
             },
             "retentionScheduleWeekly": {
-              "daysOfTheWeek": "Sunday, Tuesday",
-              "weeksOfTheMonth": "First, Third"
+              "daysOfTheWeek": "[parameters('daysOfTheWeekForYearlyRetention')]",
+              "weeksOfTheMonth": "[parameters('weeksOfTheMonthForYearlyRetention')]"
             },
-            "retentionTimes": "2016-09-21T05:30:00Z",
+            "retentionTimes": "[parameters('scheduleRunTimes')]",
             "retentionDuration": {
-              "count": "5",
+              "count": "[parameters('yearlyRetentionDurationCount')]",
               "durationType": "Years"
             }
           },
           "retentionPolicyType": "LongTermRetentionPolicy"
         },
-        "timeZone": "UTC"
-      }
+        "timeZone": "[parameters('timeZone')]"
+      }    
     },
     {
       "type": "Microsoft.RecoveryServices/vaults/replicationAlertSettings",
