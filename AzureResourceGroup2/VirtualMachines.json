@@ -45,11 +45,11 @@
   },
   "variables": {
     //"virtualNetworksVNet_name": "[concat(parameters('virtualMachineBaseName'), 'VNet')]",
-    "virtualMachines1_name": "[concat(parameters('virtualMachineBaseName'), 'Test1')]",
+    "virtualMachines1_name": "[concat(take(parameters('virtualMachineBaseName'), 10), 'Test1')]",
     "networkInterfaces1_name": "[concat(parameters('virtualMachineBaseName'), 'test1473')]",
     "publicIPAddresses1_ip_name": "[concat(parameters('virtualMachineBaseName'), 'Test1-ip')]",
     "networkSecurityGroups1_nsg_name": "[concat(parameters('virtualMachineBaseName'), 'Test1-nsg')]",
-    "virtualMachines2_name": "[concat(parameters('virtualMachineBaseName'), 'Test2')]",
+    "virtualMachines2_name": "[concat(take(parameters('virtualMachineBaseName'), 10), 'Test2')]",
     "networkInterfaces2_name": "[concat(parameters('virtualMachineBaseName'), 'test2488')]",
     "publicIPAddresses2_ip_name": "[concat(parameters('virtualMachineBaseName'), 'Test2-ip')]",
     "networkSecurityGroups2_nsg_name": "[concat(parameters('virtualMachineBaseName'), 'Test2-nsg')]",
