@@ -57,6 +57,9 @@
     "loadBalancers_LoadBalancer_name": "[concat(parameters('virtualMachineBaseName'), 'LoadBalancer')]",
     "availabilitySets_AvailabilitySet_name": "[concat(parameters('virtualMachineBaseName'), 'AvailabilitySet')]",
 
+    "loadBalancerID": "[resourceId('Microsoft.Network/loadBalancers', variables('loadBalancers_LoadBalancer_name'))]",
+    "loadBalancerFrontEndIPConfigId": "[concat(variables('loadBalancerID'),'/frontendIPConfigurations/LoadBalancerFrontEnd')]",
+
     "subnets_default_name": "default",
     "securityRules_RDP_name": "RDP",
     "securityRules_RDP_name_1": "RDP",
@@ -245,9 +248,7 @@
               "name": "[variables('loadBalancers_LoadBalancer_name')]",
               "properties": {
                 "frontendIPConfiguration": {
-                  "privateIPAllocationMethod": "dynamic",
-                  "subnet": "[parameters('virtualNetworkSubnetResourceId')]",
-                  "id": "[resourceId(concat('Microsoft.Network/loadBalancers/', variables('loadBalancers_LoadBalancer_name')), 'frontendIPConfigurations', 'LoadBalancerFrontEnd')]"
+                  "id": "[variables('loadBalancerFrontEndIPConfigId')]"
                 },
                 "frontendPort": 80,
                 "backendPort": 80,
