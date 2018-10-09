@@ -247,6 +247,7 @@
                 "frontendIPConfiguration": {
                   "privateIPAllocationMethod": "dynamic",
                   "subnet": "[parameters('virtualNetworkSubnetResourceId')]",
+                  "id": "[resourceId('Microsoft.Network/loadBalancers', variables('loadBalancers_LoadBalancer_name'), 'LoadBalancerFrontEnd')]"
                 },
                 "frontendPort": 80,
                 "backendPort": 80,
