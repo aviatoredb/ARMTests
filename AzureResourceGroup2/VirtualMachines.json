@@ -128,6 +128,7 @@
         "osProfile": {
           "computerName": "[variables('virtualMachines1_name')]",
           "adminUsername": "aviator",
+          "adminPassword": "CozyMark1234",
           "windowsConfiguration": {
             "provisionVMAgent": true,
             "enableAutomaticUpdates": true
@@ -189,6 +190,7 @@
         "osProfile": {
           "computerName": "[variables('virtualMachines2_name')]",
           "adminUsername": "aviator",
+          "adminPassword": "CozyMark1234",
           "windowsConfiguration": {
             "provisionVMAgent": true,
             "enableAutomaticUpdates": true
