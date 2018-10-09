@@ -32,7 +32,7 @@
     }
   },
   "variables": {
-    "storageAccountName": "[toLower(concat(parameters('ResourceBaseName'), 'chatbotstorage'))]",
+    "storageAccountName": "[toLower(concat(parameters('ResourceBaseName'), 'storage'))]",
     "keyVaultName": "[toLower(concat(parameters('ResourceBaseName'), 'KeyVault'))]",
     "vNetName": "[toLower(concat(parameters('ResourceBaseName'), 'VNet'))]",
     "vMachineBaseName": "[toLower(concat(parameters('ResourceBaseName'), 'VM'))]",

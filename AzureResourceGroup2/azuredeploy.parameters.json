@@ -2,9 +2,9 @@
   "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
   "contentVersion": "1.0.0.0",
   "parameters": {
-    "ResourceBaseName": {
-      "value": "edbARMTest"
-    }//,
+    //"ResourceBaseName": {
+    //  "value": "edbARMTest"
+    //}//,
     //"activeDirectoryTenantId": {
     //  "value": "f9127298-458c-4ec3-a44f-6baf96f4ed36"
     //},
