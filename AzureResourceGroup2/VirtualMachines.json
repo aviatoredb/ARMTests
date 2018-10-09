@@ -222,15 +222,10 @@
         "location": "[parameters('location')]",
         "scale": null,
         "properties": {
-          "provisioningState": "Succeeded",
-          "resourceGuid": "1b6216a8-482b-4989-8ebf-ebac1e13f8cd",
           "frontendIPConfigurations": [
             {
               "name": "LoadBalancerFrontEnd",
-              "etag": "W/\"73dac39f-1e3e-48a8-90e6-5258fb6e451d\"",
               "properties": {
-                "provisioningState": "Succeeded",
-                "privateIPAddress": "172.31.30.6",
                 "privateIPAllocationMethod": "Dynamic",
                 "subnet": {
                   //"id": "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('virtualNetworksVNet_name'), variables('subnets_default_name'))]",
@@ -243,18 +238,12 @@
           "backendAddressPools": [
             {
               "name": "edbARMTestPool",
-              "etag": "W/\"73dac39f-1e3e-48a8-90e6-5258fb6e451d\"",
-              "properties": {
-                "provisioningState": "Succeeded"
-              }
             }
           ],
           "loadBalancingRules": [
             {
               "name": "[variables('loadBalancers_LoadBalancer_name')]",
-              "etag": "W/\"73dac39f-1e3e-48a8-90e6-5258fb6e451d\"",
               "properties": {
-                "provisioningState": "Succeeded",
                 //"frontendIPConfiguration": {
                 //    "id": "[parameters('loadBalancers_edbARMLoadBalancer_id')]"
                 //},
@@ -276,9 +265,7 @@
           "probes": [
             {
               "name": "edbARMHealthProbe",
-              "etag": "W/\"73dac39f-1e3e-48a8-90e6-5258fb6e451d\"",
               "properties": {
-                "provisioningState": "Succeeded",
                 "protocol": "Tcp",
                 "port": 80,
                 "intervalInSeconds": 10,
@@ -298,15 +285,10 @@
         "tags": {},
         "scale": null,
         "properties": {
-          "provisioningState": "Succeeded",
-          "resourceGuid": "de372476-b392-492e-b266-1226933ef2ae",
           "ipConfigurations": [
             {
               "name": "ipconfig1",
-              "etag": "W/\"7f2708d7-5a42-442a-9ffe-a8b44141cdfc\"",
               "properties": {
-                "provisioningState": "Succeeded",
-                "privateIPAddress": "172.31.30.4",
                 "privateIPAllocationMethod": "Dynamic",
                 "publicIPAddress": {
                   "id": "[resourceId('Microsoft.Network/publicIPAddresses', variables('publicIPAddresses1_ip_name'))]"
@@ -346,15 +328,10 @@
         "tags": {},
         "scale": null,
         "properties": {
-          "provisioningState": "Succeeded",
-          "resourceGuid": "9375591b-90eb-4c68-ae1d-af2e5717d5c5",
           "ipConfigurations": [
             {
               "name": "ipconfig1",
-              "etag": "W/\"7cf8d90c-efa9-4866-bc73-a5a66bd97b55\"",
               "properties": {
-                "provisioningState": "Succeeded",
-                "privateIPAddress": "172.31.30.5",
                 "privateIPAllocationMethod": "Dynamic",
                 "publicIPAddress": {
                   "id": "[resourceId('Microsoft.Network/publicIPAddresses', variables('publicIPAddresses2_ip_name'))]"
@@ -394,14 +371,10 @@
         "tags": {},
         "scale": null,
         "properties": {
-          "provisioningState": "Succeeded",
-          "resourceGuid": "bee9db55-bde2-416d-9950-80efb30db9b4",
           "securityRules": [
             {
               "name": "RDP",
-              "etag": "W/\"89a9bc80-dfac-4a43-bd32-bb48d38a7c1f\"",
               "properties": {
-                "provisioningState": "Succeeded",
                 "protocol": "TCP",
                 "sourcePortRange": "*",
                 "destinationPortRange": "3389",
@@ -420,9 +393,7 @@
           "defaultSecurityRules": [
             {
               "name": "AllowVnetInBound",
-              "etag": "W/\"89a9bc80-dfac-4a43-bd32-bb48d38a7c1f\"",
               "properties": {
-                "provisioningState": "Succeeded",
                 "description": "Allow inbound traffic from all VMs in VNET",
                 "protocol": "*",
                 "sourcePortRange": "*",
@@ -440,9 +411,7 @@
             },
             {
               "name": "AllowAzureLoadBalancerInBound",
-              "etag": "W/\"89a9bc80-dfac-4a43-bd32-bb48d38a7c1f\"",
               "properties": {
-                "provisioningState": "Succeeded",
                 "description": "Allow inbound traffic from azure load balancer",
                 "protocol": "*",
                 "sourcePortRange": "*",
@@ -460,9 +429,7 @@
             },
             {
               "name": "DenyAllInBound",
-              "etag": "W/\"89a9bc80-dfac-4a43-bd32-bb48d38a7c1f\"",
               "properties": {
-                "provisioningState": "Succeeded",
                 "description": "Deny all inbound traffic",
                 "protocol": "*",
                 "sourcePortRange": "*",
@@ -480,9 +447,7 @@
             },
             {
               "name": "AllowVnetOutBound",
-              "etag": "W/\"89a9bc80-dfac-4a43-bd32-bb48d38a7c1f\"",
               "properties": {
-                "provisioningState": "Succeeded",
                 "description": "Allow outbound traffic from all VMs to all VMs in VNET",
                 "protocol": "*",
                 "sourcePortRange": "*",
@@ -500,9 +465,7 @@
             },
             {
               "name": "AllowInternetOutBound",
-              "etag": "W/\"89a9bc80-dfac-4a43-bd32-bb48d38a7c1f\"",
               "properties": {
-                "provisioningState": "Succeeded",
                 "description": "Allow outbound traffic from all VMs to Internet",
                 "protocol": "*",
                 "sourcePortRange": "*",
@@ -520,9 +483,7 @@
             },
             {
               "name": "DenyAllOutBound",
-              "etag": "W/\"89a9bc80-dfac-4a43-bd32-bb48d38a7c1f\"",
               "properties": {
-                "provisioningState": "Succeeded",
                 "description": "Deny all outbound traffic",
                 "protocol": "*",
                 "sourcePortRange": "*",
@@ -550,14 +511,10 @@
         "tags": {},
         "scale": null,
         "properties": {
-          "provisioningState": "Succeeded",
-          "resourceGuid": "278303a1-45a7-46ca-a394-8752e5e58125",
           "securityRules": [
             {
               "name": "RDP",
-              "etag": "W/\"529e4854-9ef3-44df-be0b-e3d5458dd1db\"",
               "properties": {
-                "provisioningState": "Succeeded",
                 "protocol": "TCP",
                 "sourcePortRange": "*",
                 "destinationPortRange": "3389",
@@ -576,9 +533,7 @@
           "defaultSecurityRules": [
             {
               "name": "AllowVnetInBound",
-              "etag": "W/\"529e4854-9ef3-44df-be0b-e3d5458dd1db\"",
               "properties": {
-                "provisioningState": "Succeeded",
                 "description": "Allow inbound traffic from all VMs in VNET",
                 "protocol": "*",
                 "sourcePortRange": "*",
@@ -596,9 +551,7 @@
             },
             {
               "name": "AllowAzureLoadBalancerInBound",
-              "etag": "W/\"529e4854-9ef3-44df-be0b-e3d5458dd1db\"",
               "properties": {
-                "provisioningState": "Succeeded",
                 "description": "Allow inbound traffic from azure load balancer",
                 "protocol": "*",
                 "sourcePortRange": "*",
@@ -616,9 +569,7 @@
             },
             {
               "name": "DenyAllInBound",
-              "etag": "W/\"529e4854-9ef3-44df-be0b-e3d5458dd1db\"",
               "properties": {
-                "provisioningState": "Succeeded",
                 "description": "Deny all inbound traffic",
                 "protocol": "*",
                 "sourcePortRange": "*",
@@ -636,9 +587,7 @@
             },
             {
               "name": "AllowVnetOutBound",
-              "etag": "W/\"529e4854-9ef3-44df-be0b-e3d5458dd1db\"",
               "properties": {
-                "provisioningState": "Succeeded",
                 "description": "Allow outbound traffic from all VMs to all VMs in VNET",
                 "protocol": "*",
                 "sourcePortRange": "*",
@@ -656,9 +605,7 @@
             },
             {
               "name": "AllowInternetOutBound",
-              "etag": "W/\"529e4854-9ef3-44df-be0b-e3d5458dd1db\"",
               "properties": {
-                "provisioningState": "Succeeded",
                 "description": "Allow outbound traffic from all VMs to Internet",
                 "protocol": "*",
                 "sourcePortRange": "*",
@@ -676,9 +623,7 @@
             },
             {
               "name": "DenyAllOutBound",
-              "etag": "W/\"529e4854-9ef3-44df-be0b-e3d5458dd1db\"",
               "properties": {
-                "provisioningState": "Succeeded",
                 "description": "Deny all outbound traffic",
                 "protocol": "*",
                 "sourcePortRange": "*",
@@ -710,9 +655,6 @@
             "tags": {},
             "scale": null,
             "properties": {
-                "provisioningState": "Succeeded",
-                "resourceGuid": "014b53d0-b1e8-4637-8b46-26daf7da3e10",
-                "ipAddress": "23.96.24.219",
                 "publicIPAddressVersion": "IPv4",
                 "publicIPAllocationMethod": "Dynamic",
                 "idleTimeoutInMinutes": 4,
@@ -732,9 +674,6 @@
             "tags": {},
             "scale": null,
             "properties": {
-                "provisioningState": "Succeeded",
-                "resourceGuid": "8f75038f-f902-4467-810b-bd5ce1a268f4",
-                "ipAddress": "23.96.115.141",
                 "publicIPAddressVersion": "IPv4",
                 "publicIPAllocationMethod": "Dynamic",
                 "idleTimeoutInMinutes": 4,
@@ -761,7 +700,6 @@
             "apiVersion": "2018-02-01",
             "scale": null,
             "properties": {
-                "provisioningState": "Succeeded",
                 "protocol": "TCP",
                 "sourcePortRange": "*",
                 "destinationPortRange": "3389",
@@ -785,7 +723,6 @@
         "apiVersion": "2018-02-01",
         "scale": null,
         "properties": {
-          "provisioningState": "Succeeded",
           "protocol": "TCP",
           "sourcePortRange": "*",
           "destinationPortRange": "3389",
