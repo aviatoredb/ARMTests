@@ -65,10 +65,15 @@
     "serviceName": "[concat(parameters('botServiceBaseName'), 'AppService')]",
     "slot1Name": "prod",
     "botId1": "[concat(variables('serviceName'), '_', variables('Slot1Name'))]",
+    "site1Host": "[concat(variables('serviceName'), '-', variables('Slot1Name'), '.azurewebsites.net')]",
+    "bot1Endpoint": "[concat('https://', variables('site1Host'), '/api/messages')]",
     "slot1InsightsName": "[concat(variables('botId1'), substring(uniqueString(resourceGroup().id), 0, 6))]",
     "slot2Name": "dev",
     "botId2": "[concat(variables('serviceName'), '_', variables('Slot2Name'))]",
+    "site2Host": "[concat(variables('serviceName'), '-', variables('Slot1Name'), '.azurewebsites.net')]",
+    "bot2Endpoint": "[concat('https://', variables('site1Host'), '/api/messages')]",
     "slot2InsightsName": "[concat(variables('botId2'), substring(uniqueString(resourceGroup().id), 0, 6))]"
+
   },
   "resources": [
     {
@@ -269,6 +274,52 @@
         }
       },
       "resources": [
+      ]
+    },
+    {
+      "apiVersion": "2017-12-01",
+      "type": "Microsoft.BotService/botServices",
+      "name": "[variables('botId1')]",
+      "location": "global",
+      "kind": "sdk",
+      "sku": {
+        "name": "F0"
+      },
+      "properties": {
+        "name": "[variables('botId1')]",
+        "displayName": "[variables('botId1')]",
+        "endpoint": "[variables('bot1Endpoint')]",
+        "msaAppId": "[parameters('Slot1AppId')]",
+        "developerAppInsightsApplicationId": "[variables('slot1InsightsName')]",
+        "developerAppInsightKey": "[reference(resourceId('microsoft.insights/components/', variables('slot1InsightsName')), '2015-05-01').InstrumentationKey]"
+      },
+      "dependsOn": [
+        "[variables('appServicePlanName')]",
+        "[resourceId('Microsoft.Web/sites/', variables('serviceName'))]",
+        "[resourceId('microsoft.insights/components/', variables('slot2InsightsName'))]"
+      ]
+    },
+    {
+      "apiVersion": "2017-12-01",
+      "type": "Microsoft.BotService/botServices",
+      "name": "[variables('botId2')]",
+      "location": "global",
+      "kind": "sdk",
+      "sku": {
+        "name": "F0"
+      },
+      "properties": {
+        "name": "[variables('botId2')]",
+        "displayName": "[variables('botId2')]",
+        "endpoint": "[variables('bot2Endpoint')]",
+        "msaAppId": "[parameters('Slot2AppId')]",
+        "developerAppInsightsApplicationId": "[variables('slot2InsightsName')]",
+        "developerAppInsightKey": "[reference(resourceId('microsoft.insights/components/', variables('slot2InsightsName')), '2015-05-01').InstrumentationKey]"
+      },
+      "dependsOn": [
+        "[variables('appServicePlanName')]",
+        "[resourceId('Microsoft.Web/sites/', variables('serviceName'))]",
+        "[resourceId('microsoft.insights/components/', variables('slot2InsightsName'))]"
       ]
     }
   ],
