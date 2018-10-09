@@ -176,7 +176,7 @@
   "outputs": {
     "vNetDefaultSubnetId": {
       "type": "string",
-      "value": [ "resourceId('Microsoft.Network/virtualNetworks/subnets'", "variables('vNetName')", "default)" ]      
+      "value": "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('vNetName'), 'default')]"
     }
   }
 }
