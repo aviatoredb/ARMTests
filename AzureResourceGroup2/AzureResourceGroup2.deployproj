@@ -33,6 +33,7 @@
       <Visible>False</Visible>
     </None>
     <Content Include="Deploy-AzureResourceGroup.ps1" />
+    <None Include="VirtualMachines.json" />
     <None Include="VNet.json" />
   </ItemGroup>
   <ItemGroup>

@@ -174,5 +174,9 @@
     }
   ],
   "outputs": {
+    "vNetDefaultSubnetId": {
+      "type": "string",
+      "value": "[resourceId('Microsoft.Network/publicIPAddresses', variables('publicIPName'))]"
+    }
   }
 }

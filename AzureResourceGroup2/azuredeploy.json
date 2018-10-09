@@ -35,6 +35,7 @@
     "storageAccountName": "[toLower(concat(parameters('ResourceBaseName'), 'chatbotstorage'))]",
     "keyVaultName": "[toLower(concat(parameters('ResourceBaseName'), 'KeyVault'))]",
     "vNetName": "[toLower(concat(parameters('ResourceBaseName'), 'VNet'))]",
+    "vMachineBaseName": "[toLower(concat(parameters('ResourceBaseName'), 'VM'))]",
     "cogSvcBaseNameName": "[toLower(concat(parameters('ResourceBaseName'), 'CogSvc'))]",
     "_artifactsLocation": "https://raw.githubusercontent.com",
     "botServiceName": "[toLower(concat(parameters('ResourceBaseName'), 'BotSvc'))]"
@@ -121,6 +122,26 @@
       },
       "dependsOn": [
         "[resourceId('Microsoft.Resources/deployments', 'linkedStorageAccountTemplate')]"
+      ]
+    },
+    {
+      "apiVersion": "2017-05-10",
+      "name": "linkedVirtualMachineTemplate",
+      "type": "Microsoft.Resources/deployments",
+      "properties": {
+        "mode": "Incremental",
+        "templateLink": {
+          "uri": "[uri(variables('_artifactsLocation'), '/aviatoredb/ARMTests/master/AzureResourceGroup2/VirtualMachines.json')]"
+        },
+        "parameters": {
+          "virtualMachineBaseName": { "value": "[variables('vMachineBaseName')]" },
+          "storageAccountName": { "value": "[variables('storageAccountName')]" },
+          "virtualNetworkSubnetResourceId": { "value": "[reference('linkedVNetTemplate').outputs.vNetDefaultSubnetId.value]" }
+        }
+      },
+      "dependsOn": [
+        "[resourceId('Microsoft.Resources/deployments', 'linkedStorageAccountTemplate')]",
+        "[resourceId('Microsoft.Resources/deployments', 'linkedVNetTemplate')]"
       ]
     },
     {
