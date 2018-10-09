@@ -237,16 +237,17 @@
           ],
           "backendAddressPools": [
             {
-              "name": "edbARMTestPool",
+              "name": "edbARMTestPool"
             }
           ],
           "loadBalancingRules": [
             {
               "name": "[variables('loadBalancers_LoadBalancer_name')]",
               "properties": {
-                //"frontendIPConfiguration": {
-                //    "id": "[parameters('loadBalancers_edbARMLoadBalancer_id')]"
-                //},
+                "frontendIPConfiguration": {
+                  "privateIPAllocationMethod": "dynamic",
+                  "subnet": "[parameters('virtualNetworkSubnetResourceId')]",
+                },
                 "frontendPort": 80,
                 "backendPort": 80,
                 "enableFloatingIP": false,
