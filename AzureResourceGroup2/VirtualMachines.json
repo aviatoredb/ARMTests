@@ -87,11 +87,7 @@
                         "id": "[resourceId('Microsoft.Compute/virtualMachines', variables('virtualMachines2_name'))]"
                     }
                 ]
-            },
-            "dependsOn": [
-                "[resourceId('Microsoft.Compute/virtualMachines', variables('virtualMachines1_name'))]",
-                "[resourceId('Microsoft.Compute/virtualMachines', variables('virtualMachines2_name'))]"
-            ]
+            }
         },
       {
         "type": "Microsoft.Compute/virtualMachines",
