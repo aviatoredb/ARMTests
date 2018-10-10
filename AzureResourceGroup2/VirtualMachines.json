@@ -81,7 +81,7 @@
 
     "loadBalancerID": "[resourceId('Microsoft.Network/loadBalancers', variables('loadBalancers_LoadBalancer_name'))]",
     "loadBalancerFrontEndIPConfigId": "[concat(variables('loadBalancerID'),'/frontendIPConfigurations/LoadBalancerFrontEnd')]",
-    "loadBalancerBackendPoolId": "[resourceId(variables('loadBalancerID'),'/backendAddressPools/BackendPool1')]",
+    //"loadBalancerBackendPoolId": "[resourceId(variables('loadBalancerID'),'/backendAddressPools/BackendPool1')]",
     "loadBalancerProbeId": "[concat(variables('loadBalancerID'),'/probes/tcpProbe')]",
     "loadBalancers_BackEndPool_Name": "[concat(parameters('virtualMachineBaseName'), 'BackendPool')]",
     "loadBalancers_HealthProbe_Name": "[concat(parameters('virtualMachineBaseName'), 'HealthProbe')]",
