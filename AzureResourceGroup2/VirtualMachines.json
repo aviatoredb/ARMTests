@@ -75,7 +75,7 @@
     "networkInterfaces2_name": "[concat(parameters('virtualMachineBaseName'), 'test2488')]",
     "publicIPAddresses2_ip_name": "[concat(parameters('virtualMachineBaseName'), 'Test2-ip')]",
     "networkSecurityGroups2_nsg_name": "[concat(parameters('virtualMachineBaseName'), 'Test2-nsg')]",
-    "vaults_VMVault_name": "[concat(parameters('virtualMachineBaseName'), 'VMVault')]",
+    "vaults_VMVault_name": "[concat(parameters('virtualMachineBaseName'), 'VMVaultedb')]",
     "loadBalancers_LoadBalancer_name": "[concat(parameters('virtualMachineBaseName'), 'LoadBalancer')]",
     "availabilitySets_AvailabilitySet_name": "[concat(parameters('virtualMachineBaseName'), 'AvailabilitySet')]",
 
