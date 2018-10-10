@@ -26,7 +26,7 @@
     },
     "spellCheckSku": {
       "type": "string",
-      "defaultValue": "F0"
+      "defaultValue": "S1"
     },
     "luisApiType": {
       "type": "string",
@@ -34,7 +34,7 @@
     },
     "luisSku": {
       "type": "string",
-      "defaultValue": "F0"
+      "defaultValue": "S0"
     }
   },
   "variables": {

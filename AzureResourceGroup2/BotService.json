@@ -52,11 +52,8 @@
     "serverFarmSku": {
       "type": "object",
       "defaultValue": {
-        "name": "S1",
-        "tier": "Standard",
-        "size": "S1",
-        "family": "S",
-        "capacity": 1
+        "name": "S2",
+        "tier": "Standard"
       }
     }
   },
@@ -283,7 +280,7 @@
       "location": "global",
       "kind": "sdk",
       "sku": {
-        "name": "F0"
+        "name": "S1"
       },
       "properties": {
         "name": "[variables('botId1')]",
