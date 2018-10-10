@@ -259,7 +259,6 @@
             "properties": {
               "privateIPAllocationMethod": "Dynamic",
               "subnet": {
-                //"id": "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('virtualNetworksVNet_name'), variables('subnets_default_name'))]",
                 "id": "[parameters('virtualNetworkSubnetResourceId')]"
 
               }
@@ -329,7 +328,7 @@
               },
               "loadBalancerBackendAddressPools": [
                 {
-                  "id": "[variables('loadBalancerBackendPoolId')]"
+                  "id": "[concat(variables('loadBalancerID'), concat('/backendAddressPools/', variables('loadBalancers_BackEndPool_Name')))]"
                 }
               ],
               "primary": true,
@@ -372,9 +371,13 @@
                 "id": "[resourceId('Microsoft.Network/publicIPAddresses', variables('publicIPAddresses2_ip_name'))]"
               },
               "subnet": {
-                //"id": "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('virtualNetworksVNet_name'), variables('subnets_default_name'))]",
                 "id": "[parameters('virtualNetworkSubnetResourceId')]"
               },
+              "loadBalancerBackendAddressPools": [
+                {
+                  "id": "[concat(variables('loadBalancerID'), concat('/backendAddressPools/', variables('loadBalancers_BackEndPool_Name')))]"
+                }
+              ],
               "primary": true,
               "privateIPAddressVersion": "IPv4"
             }
