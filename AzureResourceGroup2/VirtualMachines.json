@@ -325,9 +325,13 @@
                 "id": "[resourceId('Microsoft.Network/publicIPAddresses', variables('publicIPAddresses1_ip_name'))]"
               },
               "subnet": {
-                //"id": "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('virtualNetworksVNet_name'), variables('subnets_default_name'))]",
                 "id": "[parameters('virtualNetworkSubnetResourceId')]"
               },
+              "loadBalancerBackendAddressPools": [
+                {
+                  "id": "[resourceId('Microsoft.Network/loadBalancers', variables('loadBalancers_LoadBalancer_name'))]",
+                }
+              ],
               "primary": true,
               "privateIPAddressVersion": "IPv4"
             }
