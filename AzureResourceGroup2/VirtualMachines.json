@@ -81,6 +81,10 @@
 
     "loadBalancerID": "[resourceId('Microsoft.Network/loadBalancers', variables('loadBalancers_LoadBalancer_name'))]",
     "loadBalancerFrontEndIPConfigId": "[concat(variables('loadBalancerID'),'/frontendIPConfigurations/LoadBalancerFrontEnd')]",
+    "loadBalancerPoolId": "[concat(variables('loadBalancerID'),'/backendAddressPools/BackendPool1')]",
+    "loadBalancerProbeId": "[concat(variables('loadBalancerID'),'/probes/tcpProbe')]",
+    "loadBalancers_BackEndPool_Name": "[concat(parameters('virtualMachineBaseName'), 'BackendPool')]",
+    "loadBalancers_HealthProbe_Name": "[concat(parameters('virtualMachineBaseName'), 'HealthProbe')]",
 
     "subnets_default_name": "default",
     "securityRules_RDP_name": "RDP",
@@ -264,7 +268,7 @@
         ],
         "backendAddressPools": [
           {
-            "name": "edbARMTestPool"
+            "name": "[variables('loadBalancers_BackEndPool_Name')]"
           }
         ],
         "loadBalancingRules": [
@@ -279,19 +283,19 @@
               "enableFloatingIP": false,
               "idleTimeoutInMinutes": 4,
               "protocol": "Tcp",
-              "loadDistribution": "Default"
-              //"backendAddressPool": {
-              //    "id": "[parameters('loadBalancers_edbARMLoadBalancer_id_1')]"
-              //},
-              //"probe": {
-              //    "id": "[parameters('loadBalancers_edbARMLoadBalancer_id_2')]"
-              //}
+              "loadDistribution": "Default",
+              "backendAddressPool": {
+                "id": "[concat(resourceId('Microsoft.Network/loadBalancers', variables('loadBalancers_LoadBalancer_name')), concat('/backendAddressPools/', variables('loadBalancers_BackEndPool_Name')))]"
+              },
+              "probe": {
+                "id": "[concat(resourceId('Microsoft.Network/loadBalancers', variables('loadBalancers_LoadBalancer_name')), concat('/probes/', variables('loadBalancers_HealthProbe_Name')))]"
+              }
             }
           }
         ],
         "probes": [
           {
-            "name": "edbARMHealthProbe",
+            "name": "[variables('loadBalancers_HealthProbe_Name')]",
             "properties": {
               "protocol": "Tcp",
               "port": 80,
